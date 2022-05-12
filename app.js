@@ -1,5 +1,4 @@
 require('moment/locale/es');
-require('dotenv').config();
 
 const express = require('express');
 const cookieParser = require('cookie-parser');
@@ -9,19 +8,25 @@ const moment = require('moment-timezone');
 const helmet = require('helmet');
 const path = require('path');
 
-const routes = require('./src/routes/index.routes');
-
 moment.locale('es');
 moment.tz.setDefault(process.env.TZ);
 
+const routes = require('./src/routes/index.routes');
+const { wrapErrors, errorHandler } = require('./src/middlewares/errorHandling');
+
+const i18n = require('./src/utils/locale');
+
 const app = express();
+    app.use(express.json());
+    //app.use(i18n);
     app.use(helmet());
     app.use(cors());
     app.use(morgan('dev'));
     app.use(cookieParser());
-    app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
     app.use(express.static(path.join(__dirname, 'public'))); // optional
     app.use('/api', routes);
+    app.use(wrapErrors)
+    app.use(errorHandler)
 
 module.exports = app;
