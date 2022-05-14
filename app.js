@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const moment = require('moment-timezone');
 const helmet = require('helmet');
+const fileUpload = require('express-fileupload');
 const path = require('path');
 
 moment.locale('es');
@@ -24,6 +25,10 @@ const app = express();
     app.use(morgan('dev'));
     app.use(cookieParser());
     app.use(express.urlencoded({ extended: false }));
+    app.use(fileUpload({
+        useTempFiles : true,
+        tempFileDir : '/tmp/'
+    }));
     app.use(express.static(path.join(__dirname, 'public'))); // optional
     app.use('/api', routes);
     app.use(wrapErrors)

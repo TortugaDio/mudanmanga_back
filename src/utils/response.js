@@ -8,7 +8,7 @@ function successResponse(res = Response, data = {} ) {
 }
 
 function errorResponse(res, error = null, status = 400) {
-    return res.status(status).json({ success: false, error });
+    return res.status(status).json({ success: false, error: error });
 }
 
 function download(res, headers = {}, contentFile, status = 200, send = true) {

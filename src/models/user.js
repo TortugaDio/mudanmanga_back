@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const { encryptPassword } = require('../utils/strings')
 module.exports = (sequelize, DataTypes) => {
   class user extends Model {
 
@@ -10,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
   }
+
   user.init({
     firstName: DataTypes.STRING,
     middleName: DataTypes.STRING,
@@ -22,5 +24,10 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'user',
   });
+
+  user.beforeCreate(async (user) => {
+    user.password = encryptPassword(user.password)
+  })
+
   return user;
 };
