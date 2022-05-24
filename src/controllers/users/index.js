@@ -49,6 +49,7 @@ async function create(req, res , next) {
                 lastName:userCreated.lastName,
                 email : userCreated.email,
                 nickname:userCreated.nickname,
+                createdAt:userCreated.createdAt,
             }
         })
         

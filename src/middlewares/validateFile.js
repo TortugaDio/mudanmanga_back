@@ -1,4 +1,5 @@
 const Boom = require('@hapi/boom');
+const { EXTENSIONS_IMAGE } = require('../constants');
 
 function validateFileImage(req, res, next) {
 
@@ -9,6 +10,20 @@ function validateFileImage(req, res, next) {
     next();
 }
 
+function validateExtensionImage(req, res, next) {
+
+    const { file } = req.files;
+
+    const extension = file.mimetype.split('/')[1];
+
+    if(!EXTENSIONS_IMAGE.includes(extension)) {
+        throw Boom.badRequest('Invalid extension image');
+    }
+
+    next();
+}
+
 module.exports = { 
-    validateFileImage
+    validateFileImage,
+    validateExtensionImage
 }
