@@ -1,11 +1,16 @@
 module.exports = {
   "development": {
-    "username": "root",
-    "password": "Password.01",
-    "database": "mudanmanga_db",
-    "host": "127.0.0.1",
+    "username": "l0ox1vvjwbnn",
+    "password": "pscale_pw_xQCKtZ49h2Vmx6k8jUlY134phgDCi4IoDd7TG87AYdA",
+    "database": "mudanbd",
+    "host": "sy80kbkv14kk.us-east-2.psdb.cloud",
     "dialect": "mysql",
-    "port": 1306
+    "port": 3306,
+    dialectOptions: {
+      ssl: {
+        rejectUnauthorized: true,
+      }
+    }
   },
   "test": {
     "username": "root",
