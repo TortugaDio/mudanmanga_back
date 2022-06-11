@@ -1,7 +1,7 @@
 module.exports = {
   "development": {
-    "username": "l0ox1vvjwbnn",
-    "password": "pscale_pw_xQCKtZ49h2Vmx6k8jUlY134phgDCi4IoDd7TG87AYdA",
+    "username": "3tn4wv95137l",
+    "password": "pscale_pw_H5BZ4lHutZ2tpOkfWNj70Hbol60JfUm8NzZ4GzE4lDs",
     "database": "mudanbd",
     "host": "sy80kbkv14kk.us-east-2.psdb.cloud",
     "dialect": "mysql",

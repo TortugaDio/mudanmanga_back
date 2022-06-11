@@ -30,7 +30,7 @@ async function create(req, res , next) {
 
         const validPassword_ = validPassword(password); //this validation review the format of the password
 
-        if(!validPassword_) throw Boom.badRequest('Password must be at least 8 characters long and contain at least one number, one lowercase and one uppercase letter');
+        if(!validPassword_) throw Boom.badRequest('Password must be at least 8 characters long and contain at least one number, one lowercase and one uppercase letter and one symbol');
         
         const userCreated = await user.create({
             firstName,
