@@ -29,5 +29,10 @@ module.exports = (sequelize, DataTypes) => {
     user.password = encryptPassword(user.password)
   })
 
+  user.afterCreate(async (user) => {
+      
+    
+  })
+  
   return user;
 };

@@ -1,16 +1,23 @@
 
-const login = async (req , res , next) => {
+async function login(req, res, next) {
     try {
-
     } catch (error) {
         next(error);
     }
 }
 
-const register = async (req , res , next) => {
+async function register(req, res, next) {
 
     try {
-        
+    } catch (error) {
+        next(error);
+    }
+
+}
+
+async function logout(req, res, next) {
+
+    try {
     } catch (error) {
         next(error);
     }
@@ -19,5 +26,6 @@ const register = async (req , res , next) => {
 
 module.exports = {
     login,
+    logout,
     register,
 }
