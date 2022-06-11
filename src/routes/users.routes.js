@@ -7,5 +7,7 @@ const userSchema = require('../controllers/users/schema');
 const router = Router();
 
 router.post('/' , [ userSchema.createUser , validarCampos ] , userContoller.create);
+//TODO: validar campos
 router.get('/' , userContoller.get)
+
 module.exports = router;

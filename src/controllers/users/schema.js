@@ -41,8 +41,13 @@ const createUser = checkSchema({
         in:['body'],
         isString: true,
         errorMessage:'The nickname is requerid'
-    }
+    },
 
+    profiles:{
+        in:['body'],
+        isArray: true,
+        errorMessage:'The profiles is requerid'
+    },
 })
 
 module.exports = {

@@ -1,6 +1,7 @@
+const { Op } = require('sequelize');
 const Boom = require('@hapi/boom')
 
-const { user } = require('../../models');
+const { user, profile, userProfile } = require('../../models');
 const { successResponse } = require('../../utils/response')
 const { validPassword } = require('../../services/general');
 
@@ -14,11 +15,21 @@ async function create(req, res , next) {
             email,
             password,
             nickname,
-            roles
+            profiles,
         }
     } = req
 
     try {
+
+        const profilesExist = await profile.findAll({
+            where: {
+                id: {
+                    [Op.in]: profiles
+                }
+            }
+        }); 
+
+        if(profilesExist.length === 0) throw Boom.badRequest('The profiles does not exist');
 
         const existEmail = await user.findOne({ where: { email }});
 
@@ -31,11 +42,7 @@ async function create(req, res , next) {
         const validPassword_ = validPassword(password); //this validation review the format of the password
 
         if(!validPassword_) throw Boom.badRequest('Password must be at least 8 characters long and contain at least one number, one lowercase and one uppercase letter');
-        
-        
-        // TODO: Asobre todo esto, hay que hacer una validacion de roles, porque si no se pone ningun rol,
-        //      no se puede crear el usuario
-        
+                
         
         const userCreated = await user.create({
             firstName,
@@ -47,17 +54,32 @@ async function create(req, res , next) {
         });
         
         if(!userCreated) throw Boom.badRequest('User not created by internal error');
+
+        const userProfileCreated = await userProfile.bulkCreate(
+            profilesExist.map(profile => ({
+                userId: userCreated.id,
+                profileId:profile.id
+            }))
+        );
+
+        if(!userProfileCreated) throw Boom.badRequest('UserProfile not created by internal error');
         
         return successResponse(res , {
             message: 'User created successfully',
             user:{
-                firstName:userCreated.firstName,
-                middleName:userCreated.middleName,
-                lastName:userCreated.lastName,
-                email : userCreated.email,
-                nickname:userCreated.nickname,
-                createdAt:userCreated.createdAt,
-            }
+                id: userCreated.id,
+                firstName: userCreated.firstName,
+                middleName: userCreated.middleName,
+                lastName: userCreated.lastName,
+                email: userCreated.email,
+                nickname: userCreated.nickname,
+                profiles: profilesExist.map(profile => {
+                    return {
+                        id: profile.id,
+                        name: profile.name
+                    }
+                })
+            },
         })
         
     } catch (error) {
