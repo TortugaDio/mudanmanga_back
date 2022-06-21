@@ -20,7 +20,7 @@ module.exports = {
       demography: {
         type: Sequelize.STRING
       },
-      genre: {
+      gender: {
         type: Sequelize.STRING
       },
       releaseDate: {
